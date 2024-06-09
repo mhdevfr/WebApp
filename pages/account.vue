@@ -12,11 +12,16 @@
           <h1 class="text-4xl font-semibold text-gray-800">
             Welcome to your account {{ userMetadata.name }} !
           </h1>
-          <h1 class="text-2xl mt-10 text-gray-800">{{ userMetadata.email }}</h1>
+          <h1 class="text-2xl mt-10 text-gray-800">
+            <Icon name="ic:baseline-email" color="black" />
+            {{ userMetadata.email }}</h1>
           <h1 class="text-2xl mt-2 text-gray-800">
+            <Icon name="uil:github" color="black" />
             {{ userMetadata.preferred_username }}
           </h1>
-          <h1 class="text-2xl mt-2 text-gray-800">{{ userMetadata.name }}</h1>
+          <h1 class="text-2xl mt-2 text-gray-800">
+            <Icon name="uil:user" color="black" />
+            {{ userMetadata.name }}</h1>
         </div>
         <div class="flex justify-end w-full items-start">
           <img :src="userMetadata.avatar_url" class="rounded-full h-48 m-10" />
@@ -57,10 +62,10 @@
         </div>
         <div class="w-full flex justify-center items-center">
           <button
-          @click="signOut"
-          class="bg-red-400 px-10 mt-5 text-center h-10 rounded-lg :hover:bg-red-900"
+            @click="signOut"
+            class="bg-red-400 px-10 mt-5 text-center h-10 rounded-lg :hover:bg-red-900"
           >
-          Logout
+            Logout
           </button>
         </div>
       </div>
@@ -69,8 +74,10 @@
 </template>
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-
+const client = useSupabaseClient()
 const user = useSupabaseUser();
+const router = useRouter()
+
 const userMetadata = ref({
   name: "",
   email: "",
@@ -79,6 +86,11 @@ const userMetadata = ref({
   avatar_url: "",
   preferred_username: "",
 });
+
+definePageMeta({
+  middleware: 'auth'
+})
+
 
 watchEffect(() => {
   if (user.value) {
@@ -95,13 +107,13 @@ watchEffect(() => {
 });
 
 const signOut = async () => {
-  const { error } = await client.auth.signOut()
-  if (error){
-  console.log('SignOut Error:', error)
+  const { error } = await client.auth.signOut();
+  if (error) {
+    console.log("SignOut Error:", error);
   } else {
-    router.push('/')
+    router.push("/");
   }
-}
+};
 
 const components = ref([
   {

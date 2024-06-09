@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@vueuse/motion/nuxt',
     '@nuxtjs/supabase',
+    'nuxt-icon',
   ], 
   supabase: {
     redirect: false
