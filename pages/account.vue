@@ -10,53 +10,31 @@
       <div class="flex">
         <div class="w-3/4 p-4">
           <h1 class="text-4xl font-semibold text-gray-800">
-            Welcome to your account {{ user.name }} !
+            Welcome to your account {{ userMetadata.name }} !
           </h1>
-          <h1 class="text-2xl mt-10 text-gray-800">📨 : {{ user.email }}</h1>
-          <h1 class="text-2xl mt-2 text-gray-800">📞 : {{ user.phone }}</h1>
-          <h1 class="text-2xl mt-2 text-gray-800">🏠 : {{ user.address }}</h1>
+          <h1 class="text-2xl mt-10 text-gray-800">{{ userMetadata.email }}</h1>
+          <h1 class="text-2xl mt-2 text-gray-800">
+            {{ userMetadata.preferred_username }}
+          </h1>
+          <h1 class="text-2xl mt-2 text-gray-800">{{ userMetadata.name }}</h1>
         </div>
-        <img :src="user.img" class="rounded-full p-10" />
-      </div>
-
-      <div class="h-36 flex w-full flex-col mt-2 pl-4">
-        <h2>Need to change your password ?</h2>
-        <input
-          type="password"
-          placeholder="current password"
-          class="w-1/3 h-12 border-2 border-gray-300 rounded-lg p-2 mt-2"
-        />
-        <div class="flex justify-start items-center mt-2">
-          <input
-            type="password"
-            placeholder="new password"
-            class="w-1/3 h-12 border-2 border-gray-300 rounded-lg p-2"
-          />
-          <input
-            type="password"
-            placeholder="confirm new password"
-            class="w-1/3 h-12 border-2 border-gray-300 rounded-lg p-2 ml-2"
-          />
-          <button
-            @click="updatePassword"
-            class="bg-red-400 px-4 h-12 mx-2 rounded-md"
-          >
-            Change password
-          </button>
+        <div class="flex justify-end w-full items-start">
+          <img :src="userMetadata.avatar_url" class="rounded-full h-48 m-10" />
         </div>
       </div>
-
       <div class="w-full">
         <h1 class="px-4 my-4">Your last components :</h1>
         <div class="w-11/12 px-4">
           <table
-            v-for="component in components"
-            v-if="components"
-            :key="component.id"
+            v-if="components.length > 0"
             cellspacing="0"
             class="w-full h-full"
           >
-            <tr class="bg-indigo-500 text-lg text-left w-full h-12">
+            <tr
+              v-for="component in components"
+              :key="component.id"
+              class="bg-indigo-500 text-lg text-left w-full h-12"
+            >
               <td class="px-2 w-1/5">{{ component.name }}</td>
               <td class="text-left w-2/5 px-2">{{ component.description }}</td>
               <td class="w-1/5 px-2">{{ component.usage }}</td>
@@ -77,75 +55,85 @@
             </tr>
           </table>
         </div>
-        <div
-          class="w-full bg-gray-400 h-96 flex justify-center items-center flex-col"
-          v-if="!components"
-        >
-          <h1>You don't have any components yet...</h1>
-          <nuxt-link class="bg-green-400 p-2 mt-2 rounded" to="/build"
-            >Create now</nuxt-link
+        <div class="w-full flex justify-center items-center">
+          <button
+          @click="signOut"
+          class="bg-red-400 px-10 mt-5 text-center h-10 rounded-lg :hover:bg-red-900"
           >
-        </div>
-        <div class="w-full mt-4 text-center" v-if="components">
-          Charger plus de composants ?
+          Logout
+          </button>
         </div>
       </div>
     </div>
   </div>
 </template>
+<script setup lang="ts">
+import { useRouter } from "vue-router";
 
-<script>
-export default {
-  data() {
-    return {
-      user: {
-        name: "John Doe",
-        email: "johndoe@gmail.com",
-        phone: "1234567890",
-        address: "1234 Main St, City, Country",
-        img: "http://via.placeholder.com/150x150",
-      },
-      components: [
-        {
-          name: "Component 1",
-          description: "This is a component that does something",
-          usage: "Used in the main page",
-          link: "http://localhost:3000",
-          id: 1,
-        },
-        {
-          name: "Component 2",
-          description: "This is another component that does something else",
-          usage: "Used in the sidebar",
-          id: 2,
-        },
-        {
-          name: "Component 3",
-          description: "This is a third component that does something again",
-          usage: "Used in the footer",
-          id: 3,
-        },
-      ],
+const user = useSupabaseUser();
+const userMetadata = ref({
+  name: "",
+  email: "",
+  phone: "",
+  address: "",
+  avatar_url: "",
+  preferred_username: "",
+});
+
+watchEffect(() => {
+  if (user.value) {
+    const { user_metadata } = user.value;
+    userMetadata.value = {
+      name: user_metadata.name || "",
+      email: user_metadata.email || "",
+      phone: user_metadata.phone || "",
+      address: user_metadata.address || "",
+      avatar_url: user_metadata.avatar_url || "",
+      preferred_username: user_metadata.preferred_username || "",
     };
+  }
+});
+
+const signOut = async () => {
+  const { error } = await client.auth.signOut()
+  if (error){
+  console.log('SignOut Error:', error)
+  } else {
+    router.push('/')
+  }
+}
+
+const components = ref([
+  {
+    name: "Component 1",
+    description: "This is a component that does something",
+    usage: "Used in the main page",
+    id: 1,
   },
-  methods: {
-    deleteComponent(id) {
-      this.components = this.components.filter(
-        (component) => component.id !== id
-      );
-    },
-    copyComponent(id) {
-      const component = this.components.find(
-        (component) => component.id === id
-      );
-      this.components.push({ ...component, id: this.components.length + 1 });
-    },
+  {
+    name: "Component 2",
+    description: "This is another component that does something else",
+    usage: "Used in the sidebar",
+    id: 2,
   },
+  {
+    name: "Component 3",
+    description: "This is a third component that does something again",
+    usage: "Used in the footer",
+    id: 3,
+  },
+]);
+
+const deleteComponent = (id: number) => {
+  components.value = components.value.filter(
+    (component) => component.id !== id
+  );
+};
+
+const copyComponent = (id: number) => {
+  const component = components.value.find((component) => component.id === id);
+  if (component) {
+    components.value.push({ ...component, id: components.value.length + 1 });
+  }
 };
 </script>
-
-<style scoped>
-button {
-  outline: none;
-}
-</style>

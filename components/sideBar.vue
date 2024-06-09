@@ -344,6 +344,7 @@
             class="absolute top-0 left-0 w-2 h-2 mt-2 ml-2 bg-indigo-500 rounded-full"
           ></span>
         </nuxt-link>
+        
       </div>
     </div>
     <nuxt-link
@@ -369,6 +370,8 @@
   </div>
 </template>
 <script setup>
+const client = useSupabaseClient()
+
 import { ref } from "vue";
 const showSidebar = ref(true);
 const toggleSidebar = () => {
