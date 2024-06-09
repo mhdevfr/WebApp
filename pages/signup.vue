@@ -3,12 +3,13 @@
     <div class="h-full w-full flex items-center">
       <sideBar />
       <div class="h-full w-full flex items-center justify-center">
-        <loginForm />
+        <signupForm />
       </div>
     </div>
   </div>
 </template>
+<script setup>
+</script>
+<style scoped>
+</style>
 
-<script setup></script>
-
-<style scoped></style>

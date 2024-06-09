@@ -1,9 +1,12 @@
 <template>
-    <form @submit.prevent="submitForm" class="h-96  flex w-3/4 bg-white bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100" v-motion-slide-visible-top> 
+    <form @submit.prevent class="h-96  flex w-3/4 bg-white bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100" v-motion-slide-visible-top> 
         <div class="w-1/2 h-full flex rounded-md">
             <div class="bg-green-300 flex h-full w-16 rounded-md">
-              <button class="text-black bg-green-400 w-full rounded-md items-center flex flex-col justify-center" @click="loginWithGitHub">OAuth GitHub<img src="../images/icons8-github-50.png" class="w-10 h-10"></button>
-            </div>
+              <button class="text-black bg-green-400 w-full rounded-md items-center flex flex-col justify-center">
+                OAuth GitHub
+               <img src="/assets/images/github.png" class="w-10 h-10">
+              </button>
+              </div>
             <div class="w-full text-white flex flex-col items-center">
               <h1 class="text-3xl my-12 text-center">Build your component</h1>
               <h1 class=" text-xl w-64"><cite>"Chaque composant est essentiel dans un site il ne faut jamais les négligés, l'UI/UX n'a jamais été aussi important qu'en 2024."</cite></h1>
@@ -19,3 +22,5 @@
         </div>
       </form>
 </template>
+<script setup>
+</script>

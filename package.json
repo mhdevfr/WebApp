@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@nuxt/ui-pro": "^1.2.0",
+    "@nuxtjs/supabase": "^1.2.2",
     "@nuxtjs/tailwindcss": "^6.11.4",
     "@supabase/supabase-js": "^2.39.7",
     "@vueuse/motion": "^2.1.0",
