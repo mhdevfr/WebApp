@@ -30,35 +30,6 @@
       <div class="w-full">
         <h1 class="px-4 my-4">Your last components :</h1>
         <div class="w-11/12 px-4">
-          <table
-            v-if="components.length > 0"
-            cellspacing="0"
-            class="w-full h-full"
-          >
-            <tr
-              v-for="component in components"
-              :key="component.id"
-              class="bg-indigo-500 text-lg text-left w-full h-12"
-            >
-              <td class="px-2 w-1/5">{{ component.name }}</td>
-              <td class="text-left w-2/5 px-2">{{ component.description }}</td>
-              <td class="w-1/5 px-2">{{ component.usage }}</td>
-              <td class="w-1/5">
-                <button
-                  class="px-4 mx-2 bg-red-400"
-                  @click="deleteComponent(component.id)"
-                >
-                  Delete
-                </button>
-                <button
-                  class="px-4 bg-green-400"
-                  @click="copyComponent(component.id)"
-                >
-                  Copy
-                </button>
-              </td>
-            </tr>
-          </table>
         </div>
         <div class="w-full flex justify-center items-center">
           <button

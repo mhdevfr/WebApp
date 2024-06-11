@@ -59,7 +59,6 @@
 
 <script setup>
 import { ref } from "vue";
-import { createClient } from "@nuxtjs/supabase";
     const email = ref("");
     const password = ref("");
     const passwordConf = ref("");

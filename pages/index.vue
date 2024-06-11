@@ -88,7 +88,4 @@ const signOut = async () => {
   perspective: 1000px;
 }
 
-button {
-  outline: none;
-}
 </style>
