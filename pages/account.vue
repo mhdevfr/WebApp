@@ -22,6 +22,12 @@
           <h1 class="text-2xl mt-2 text-gray-800">
             <Icon name="uil:user" color="black" />
             {{ userMetadata.name }}</h1>
+            <button
+            @click="signOut"
+            class="bg-red-400 px-10 mt-5 text-center h-10 rounded-lg :hover:bg-red-900"
+          >
+            Logout
+          </button>
         </div>
         <div class="flex justify-end w-full items-start">
           <img :src="userMetadata.avatar_url" class="rounded-full h-48 m-10" />
@@ -29,15 +35,8 @@
       </div>
       <div class="w-full">
         <h1 class="px-4 my-4">Your last components :</h1>
-        <div class="w-11/12 px-4">
-        </div>
-        <div class="w-full flex justify-center items-center">
-          <button
-            @click="signOut"
-            class="bg-red-400 px-10 mt-5 text-center h-10 rounded-lg :hover:bg-red-900"
-          >
-            Logout
-          </button>
+        <div class="w-full ">
+          <componentList/>
         </div>
       </div>
     </div>
@@ -120,3 +119,27 @@ const copyComponent = (id: number) => {
   }
 };
 </script>
+<style scoped>
+
+	.table {
+		border-spacing: 0 15px;
+	}
+
+	i {
+		font-size: 1rem !important;
+	}
+
+	.table tr {
+		border-radius: 20px;
+	}
+
+	tr td:nth-child(n+5),
+	tr th:nth-child(n+5) {
+		border-radius: 0 .625rem .625rem 0;
+	}
+
+	tr td:nth-child(1),
+	tr th:nth-child(1) {
+		border-radius: .625rem 0 0 .625rem;
+	}
+</style>
