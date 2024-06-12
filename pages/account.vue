@@ -4,7 +4,7 @@
       <sideBar />
     </div>
     <div
-      class="w-2/3 h-4/5 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-white border-gray-50"
+      class="w-2/3 h-2/3 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-white border-gray-50"
       v-motion-slide-visible-top
     >
       <div class="flex">
@@ -35,7 +35,7 @@
       </div>
       <div class="w-full">
         <h1 class="px-4 my-4">Your last components :</h1>
-        <div class="w-full ">
+        <div>
           <componentList/>
         </div>
       </div>
